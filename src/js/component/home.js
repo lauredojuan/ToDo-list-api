@@ -40,28 +40,37 @@ export class Home extends React.Component {
 	};
 
 	render() {
+		const listDisplay = this.state.taskListed.map((liContent, index) => {
+			return (
+				<ListTasks
+					key={index}
+					task={liContent}
+					deleteFunction={this.deleteFunctionHandler}
+					id={index}
+				/>
+			);
+		});
 		// console.log(this.state.taskListed);
 		return (
-			<div className="container">
-				<h1> To Do</h1>
-				<input
-					value={this.state.task}
-					onChange={this.updateTask}
-					onKeyUp={this.saveTask}
-					placeholder="What needs to be done"
-				/>
-				<ul>
-					{this.state.taskListed.map((liContent, index) => {
-						return (
-							<ListTasks
-								key={index}
-								task={liContent}
-								deleteFunction={this.deleteFunctionHandler}
-								id={index}
-							/>
-						);
-					})}
-				</ul>
+			<div className="container-fluid">
+				<div className="container">
+					<h1> To Do</h1>
+					<input
+						value={this.state.task}
+						onChange={this.updateTask}
+						onKeyUp={this.saveTask}
+						placeholder="What needs to be done"
+					/>
+					<br />
+					<br />
+					<ul>
+						{this.state.taskListed.length ? (
+							listDisplay
+						) : (
+							<li> No tasks, add a task</li>
+						)}
+					</ul>
+				</div>
 			</div>
 		);
 	}
