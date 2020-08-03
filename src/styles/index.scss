@@ -10,6 +10,7 @@ visibility: visible;
     background: white;
     width:600px;
     height:800px;
+    
   
 }
 .container-fluid{
@@ -18,12 +19,15 @@ visibility: visible;
     padding-bottom: 30px;
     
 }
-h1{
-   align-content: center;
+
+li{
+    list-style-type:none;
 }
    
 ul{
     border: 1px solid gray;
+    width:75%;
+  
     
 }
 
