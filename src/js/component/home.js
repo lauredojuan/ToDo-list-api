@@ -19,18 +19,47 @@ export class Home extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/Gerdeth")
+			.then(response => {
+				if (response.ok) {
+					return response.json();
+				}
+			})
+			.then(data => {
+				this.setState({
+					taskListed: data
+				});
+			});
+	}
+
 	updateTask = event => {
 		this.setState({ task: event.target.value });
 	};
 	saveTask = event => {
 		if (event.keyCode === 13) {
-			const newArr = [...this.state.taskListed];
+            const newArr = [...this.state.taskListed];
+            let newObject={label:this.state.task, done: false }
+            }
 			newArr.push(this.state.task);
 			this.setState({
 				taskListed: newArr,
 				task: ""
-			});
-		}
+            });
+            fetch("https://assets.breatheco.de/apis/fake/todos/user/Gerdeth",{
+                    method: 'PUT', 
+                    body: JSON.stringify(newArr), 
+                    headers:{
+                        'Content-Type': 'application/json'
+                            }
+                }
+                )
+                .then(res => res.json())
+                .then(response => console.log('Success:', JSON.stringify(response)))
+                .catch(error => console.error('Error:', error));
+                            
+                            
+                        
 	};
 	deleteFunctionHandler = id => {
 		const returnArr = this.state.taskListed.filter(
@@ -40,11 +69,11 @@ export class Home extends React.Component {
 	};
 
 	render() {
-		const listDisplay = this.state.taskListed.map((liContent, index) => {
+		const listDisplay = this.state.taskListed.map((object, index) => {
 			return (
 				<ListTasks
 					key={index}
-					task={liContent}
+					task={object.label}
 					deleteFunction={this.deleteFunctionHandler}
 					id={index}
 				/>
@@ -73,5 +102,5 @@ export class Home extends React.Component {
 				</div>
 			</div>
 		);
-	}
+	};
 }
